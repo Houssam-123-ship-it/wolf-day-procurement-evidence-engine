@@ -1,0 +1,17 @@
+{
+  "synthetic": true,
+  "archives": [
+    {
+      "name": "wolf-starter.zip",
+      "bytes": 7809553,
+      "sha256": "cea247db4e1739eac3cc3be2d06242c4368b94084c401b3bd176757f1f1f435d",
+      "files": 885
+    },
+    {
+      "name": "wolf-dataset.zip",
+      "bytes": 470928,
+      "sha256": "2e0c2a79d2af54b05eba70fe74f0a191a66eec9b4d896f5799de19332a07328c",
+      "files": 89
+    }
+  ]
+}
