@@ -17,7 +17,7 @@ INGESTION = ROOT / "kit/dataset/ingestion-versions.json"
 LINEAGE = ROOT / "kit/dataset/update-lineage.json"
 FX = ROOT / "kit/dataset/fx-rates.json"
 TRANSACTIONS = ROOT / "kit/dataset/transactions.json"
-VALIDATION_MD = ROOT / "validation.md"
+VALIDATION_MD = ROOT / "verification-results.md"
 
 
 def load_event(events, event_id):
