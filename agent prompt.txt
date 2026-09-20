@@ -1,0 +1,1708 @@
+Yes. Taking **everything you pasted from the DaiL Hackathon Knowledge Base**, plus the earlier information about your Wolf Day, I would prepare you and your Claude Code agent as a **complete client-to-production system**.
+
+The key is to separate three things:
+
+1. **You = the Wolf**: client understanding, decisions, validation, product judgment, presentation.
+2. **Claude Code = your engineering partner**: architecture, coding, debugging, testing, implementation speed.
+3. **Your application = evidence**: the working prototype that proves the solution.
+
+The DaiL material explicitly positions Wolf Day around **prototype → production**, while the named hackathon stack is **Claude Code, Gemini API, Supabase, Next.js, LangGraph and Python**. The resources also list additional technologies such as FastAPI, MCP, Playwright, Vitest, Vercel and Cloud Run. Based on the material you supplied, these additional tools are useful options rather than things you should automatically use.
+
+---
+
+# 1. Your complete Wolf Day operating model
+
+Think of the day as this:
+
+```text
+                    CLIENT
+                      │
+                      ▼
+              ┌───────────────┐
+              │  UNDERSTAND   │
+              │ situation     │
+              │ workflow      │
+              │ constraints   │
+              └───────┬───────┘
+                      │
+                      ▼
+               FIND THE PAIN
+                      │
+                      ▼
+              ┌───────────────┐
+              │   VALIDATE    │
+              │ Is this really│
+              │ the problem?  │
+              └───────┬───────┘
+                      │
+                      ▼
+               DEFINE MVP
+                      │
+                      ▼
+              ┌───────────────┐
+              │ CLAUDE CODE   │
+              │ builds V1     │
+              └───────┬───────┘
+                      │
+                      ▼
+                 TEST V1
+                      │
+                      ▼
+               FIND WEAKNESS
+                      │
+                      ▼
+              VALIDATE AGAIN
+                      │
+                      ▼
+              ┌───────────────┐
+              │   BUILD V2    │
+              │ more reliable  │
+              │ more client    │
+              │ specific       │
+              └───────┬───────┘
+                      │
+                      ▼
+             PRODUCTION THINKING
+                      │
+                      ▼
+                FREEZE DEMO
+                      │
+                      ▼
+                 PRESENT
+                      │
+                      ▼
+             PRODUCTION NEXT STEP
+```
+
+This is much more important than whether you use Gemini or Claude inside the product.
+
+---
+
+# 2. The first thing you do when they give you the challenge
+
+Do **not** tell Claude Code:
+
+> "Build an AI application for this company."
+
+That's too vague.
+
+Instead, immediately create a **Challenge Brief**.
+
+For example:
+
+```text
+# CHALLENGE BRIEF
+
+## Client
+[Company / sector]
+
+## Situation
+[What is happening today?]
+
+## Users
+[Who actually uses the workflow?]
+
+## Current workflow
+1.
+2.
+3.
+4.
+5.
+
+## Observed pain points
+- 
+- 
+- 
+
+## Constraints
+- Time
+- Data
+- Privacy
+- Existing systems
+- Human approval
+- Technical
+
+## Candidate pain
+[one sentence]
+
+## Hypothesis
+We believe that...
+
+## AI opportunity
+AI could...
+
+## Success criteria
+The prototype should demonstrate...
+
+## Unknowns
+- 
+- 
+- 
+```
+
+You and Claude then work from this document.
+
+---
+
+# 3. The most important question: "Where is the pain?"
+
+Client pain generally falls into several categories.
+
+## A. Information overload
+
+The client has too much information.
+
+Examples:
+
+* emails
+* documents
+* contracts
+* tickets
+* reports
+* PDFs
+* customer messages
+
+Potential AI workflow:
+
+```text
+Documents
+   ↓
+Extraction
+   ↓
+Classification
+   ↓
+Retrieval
+   ↓
+Summary / recommendation
+   ↓
+Human decision
+```
+
+### Example
+
+A company receives 300 supplier documents.
+
+Pain:
+
+> Employees spend too much time manually finding relevant information.
+
+Prototype:
+
+**Document Intelligence Agent**
+
+```text
+Upload PDF
+     ↓
+Extract
+     ↓
+Understand
+     ↓
+Search
+     ↓
+Answer
+     ↓
+Cite source
+```
+
+Technology:
+
+```text
+Next.js
+Supabase
+Gemini/other LLM
+Python
+Docling/PyMuPDF
+pgvector if needed
+```
+
+---
+
+# 4. B. Repetitive operations
+
+This is probably one of the easiest categories for a hackathon.
+
+Examples:
+
+* manually classifying emails
+* processing applications
+* entering information
+* generating reports
+* checking forms
+* routing requests
+
+Workflow:
+
+```text
+Input
+ ↓
+AI understands
+ ↓
+AI structures information
+ ↓
+AI decides/recommends
+ ↓
+Human approves
+ ↓
+Action
+```
+
+Example:
+
+### HR application triage
+
+```text
+CV
+ ↓
+Extraction
+ ↓
+Skills
+ ↓
+Experience
+ ↓
+Job requirements
+ ↓
+Match explanation
+ ↓
+Human review
+```
+
+Important:
+
+Don't make:
+
+> "AI automatically rejects candidates."
+
+Instead:
+
+> "AI prepares a structured recommendation for the recruiter."
+
+That is easier to demonstrate responsibly and gives you a human-in-the-loop workflow.
+
+---
+
+# 5. C. Customer support
+
+This is the example we discussed.
+
+```text
+Customer message
+       ↓
+Classification
+       ↓
+Priority
+       ↓
+Information extraction
+       ↓
+Knowledge retrieval
+       ↓
+Suggested response
+       ↓
+Human approval
+       ↓
+Customer
+```
+
+Possible features:
+
+```text
+Category
+Priority
+Customer information
+Relevant documents
+Suggested answer
+Confidence
+Escalation
+```
+
+The interesting part isn't the chatbot.
+
+It's the **workflow automation around the chatbot**.
+
+---
+
+# 6. D. Sales / CRM
+
+Potential pain:
+
+> Salespeople spend too much time turning conversations into structured CRM information.
+
+Workflow:
+
+```text
+Meeting transcript
+       ↓
+AI extraction
+       ↓
+Customer needs
+       ↓
+Pain points
+       ↓
+Actions
+       ↓
+CRM update proposal
+       ↓
+Human approval
+```
+
+You could demonstrate:
+
+```text
+Meeting:
+"We need deployment before January..."
+
+AI:
+Customer need → Cloud deployment
+Deadline → January
+Priority → High
+Next action → Technical proposal
+Owner → Sales engineer
+```
+
+Then:
+
+**Approve CRM update**
+
+This is a very understandable demo.
+
+---
+
+# 7. E. Document / contract intelligence
+
+Pain:
+
+> Employees spend too much time reviewing long documents.
+
+Workflow:
+
+```text
+PDF
+ ↓
+Document parser
+ ↓
+Chunking
+ ↓
+Embedding
+ ↓
+Vector search
+ ↓
+LLM
+ ↓
+Answer + source
+```
+
+For example:
+
+> "What are the termination conditions?"
+
+Your application returns:
+
+```text
+Answer
+────────────
+...
+
+Source
+────────────
+Contract.pdf
+Page 17
+```
+
+This is where **RAG + pgvector** can become useful.
+
+But don't automatically build RAG.
+
+Ask:
+
+> Does the problem actually require retrieval?
+
+If 10 predefined examples are enough, RAG may be unnecessary.
+
+---
+
+# 8. F. Internal knowledge assistant
+
+Pain:
+
+> Employees don't know where information is stored.
+
+Workflow:
+
+```text
+Company documents
+      ↓
+Index
+      ↓
+Retrieval
+      ↓
+AI
+      ↓
+Answer
+      ↓
+Sources
+```
+
+But again:
+
+### Bad hackathon solution
+
+> "I built a generic company chatbot."
+
+### Better
+
+> "I identified that technicians spend time searching maintenance procedures, so I built an assistant specifically for retrieving the correct procedure during equipment incidents."
+
+The second one has a **specific workflow**.
+
+---
+
+# 9. G. Forecasting / prediction
+
+Your Data Science background becomes useful here.
+
+Potential client pains:
+
+* demand forecasting
+* equipment failure
+* customer churn
+* sales forecasting
+* resource planning
+* anomaly detection
+
+Workflow:
+
+```text
+Historical data
+       ↓
+Data processing
+       ↓
+ML model
+       ↓
+Prediction
+       ↓
+Explanation
+       ↓
+Human decision
+```
+
+For example:
+
+```text
+Equipment
+ ↓
+Historical measurements
+ ↓
+Model
+ ↓
+Risk prediction
+ ↓
+Alert
+ ↓
+Technician investigates
+```
+
+Here, don't force an LLM into the system.
+
+Your architecture might simply be:
+
+```text
+Python
+ ↓
+scikit-learn / XGBoost
+ ↓
+FastAPI
+ ↓
+Next.js
+ ↓
+Supabase
+```
+
+That's perfectly valid.
+
+---
+
+# 10. H. Multimodal problems
+
+If the client gives you images/video/audio:
+
+```text
+Image/audio/video
+       ↓
+AI perception
+       ↓
+Structured information
+       ↓
+Decision/recommendation
+       ↓
+Human
+```
+
+Possible examples:
+
+### Image inspection
+
+```text
+Photo
+ ↓
+Vision model
+ ↓
+Detect issue
+ ↓
+Severity
+ ↓
+Recommendation
+```
+
+### Voice workflow
+
+```text
+Voice
+ ↓
+Whisper
+ ↓
+Transcript
+ ↓
+LLM
+ ↓
+Structured information
+ ↓
+Action
+```
+
+Potential DaiL technologies from your supplied material include Whisper, ElevenLabs, Gemini, OpenAI, Claude, MediaPipe and other AI tools.
+
+---
+
+# 11. I. Agentic workflows
+
+This is where **LangGraph** becomes interesting.
+
+Don't use LangGraph because "agents are cool."
+
+Use it when the workflow genuinely contains multiple steps with state and decisions.
+
+For example:
+
+```text
+Customer request
+       ↓
+Classifier
+       ↓
+     ┌─┴─────────┐
+     ↓           ↓
+Known issue   Unknown
+     ↓           ↓
+Retrieve       Research
+     ↓           ↓
+     └─────┬─────┘
+           ↓
+      Draft response
+           ↓
+      Human approval
+```
+
+That is a reasonable agent workflow.
+
+A simple LLM call doesn't need LangGraph.
+
+---
+
+# 12. When MCP becomes useful
+
+MCP becomes interesting when your AI needs access to tools/data.
+
+For example:
+
+```text
+AI Agent
+   │
+   ├── CRM tool
+   ├── Database tool
+   ├── Document tool
+   ├── Calendar tool
+   └── Internal API
+```
+
+Then:
+
+```text
+User request
+      ↓
+AI Agent
+      ↓
+Choose tool
+      ↓
+Execute tool
+      ↓
+Receive result
+      ↓
+Reason
+      ↓
+Human approval
+```
+
+But again:
+
+**Don't add MCP just to say you used MCP.**
+
+If the challenge doesn't require external tools, skip it.
+
+---
+
+# 13. Your technical decision tree
+
+This should be inside your Claude Code instructions.
+
+```text
+START
+  │
+  ▼
+Does the problem need AI?
+  │
+ ┌┴─────────────┐
+NO              YES
+ │               │
+normal app       ▼
+              What type?
+                │
+       ┌────────┼──────────┐
+       │        │          │
+      Text     Data     Image/audio
+       │        │          │
+       ▼        ▼          ▼
+      LLM       ML       Vision/
+      RAG       model    multimodal
+       │
+       ▼
+Does it need multiple
+AI/tool steps?
+       │
+    ┌──┴───┐
+   NO     YES
+    │       │
+ simple    LangGraph
+ workflow
+    │
+    ▼
+Does it need external
+tools/data?
+    │
+ ┌──┴──┐
+NO    YES
+ │      │
+ │     MCP/API
+ │
+ ▼
+Next.js
+ + Supabase
+```
+
+This prevents overengineering.
+
+---
+
+# 14. Default architecture for you
+
+Unless the challenge says otherwise:
+
+```text
+Frontend
+Next.js + TypeScript
+        │
+        ▼
+API / Server Actions
+        │
+        ├─────────────┐
+        ▼             ▼
+   LLM Provider    Supabase
+        │             │
+        │             ├── PostgreSQL
+        │             ├── Storage
+        │             └── pgvector if required
+        │
+        ▼
+ AI workflow
+```
+
+Then add:
+
+### Python
+
+only when you need:
+
+* ML
+* data processing
+* specialized AI
+* audio processing
+* computer vision
+
+### FastAPI
+
+if Python needs to become a separate service.
+
+### LangGraph
+
+if you actually need multi-step agent orchestration.
+
+### MCP
+
+if agents need standardized tool/data access.
+
+### Playwright
+
+if browser automation is part of the problem or useful for testing.
+
+### Docker
+
+when deployment/environment reproducibility needs it.
+
+---
+
+# 15. How you should use Claude Code
+
+This is extremely important.
+
+Don't let Claude Code independently decide the whole product.
+
+You remain the architect.
+
+Give Claude Code structured tasks.
+
+### Bad
+
+> Build the application.
+
+### Better
+
+> Read `challenge.md`. Identify the core workflow and propose an MVP architecture. Do not write code yet. Identify assumptions and risks.
+
+Then you review.
+
+Then:
+
+> Implement the frontend for the validated workflow.
+
+Then:
+
+> Implement the API.
+
+Then:
+
+> Implement structured LLM output.
+
+Then:
+
+> Add validation and error handling.
+
+Then:
+
+> Test the workflow.
+
+Then:
+
+> Prepare the production-readiness checklist.
+
+---
+
+# 16. Give Claude Code a project memory
+
+At the beginning:
+
+```text
+wolf-day/
+│
+├── README.md
+├── challenge.md
+├── validation.md
+├── decisions.md
+├── architecture.md
+├── demo.md
+│
+├── app/
+├── components/
+├── lib/
+├── services/
+│
+├── tests/
+│
+└── docs/
+    ├── production.md
+    ├── risks.md
+    └── evaluation.md
+```
+
+Your important files are:
+
+### `challenge.md`
+
+What is the client problem?
+
+### `validation.md`
+
+What did you discover?
+
+### `decisions.md`
+
+Why did you choose or reject something?
+
+### `architecture.md`
+
+How does the system work?
+
+### `demo.md`
+
+What exact sequence will you demonstrate?
+
+---
+
+# 17. Your validation file should evolve
+
+For example:
+
+```text
+# VALIDATION LOG
+
+## Hypothesis 1
+
+Pain:
+Manual customer-request classification.
+
+Evidence:
+[What we observed]
+
+Confidence:
+Medium
+
+Decision:
+Prototype classification.
+
+---
+
+## Validation 2
+
+Finding:
+Routing is more valuable than classification.
+
+Decision:
+Prioritize routing.
+
+---
+
+## Validation 3
+
+Finding:
+Users don't want fully automatic actions.
+
+Decision:
+Add human approval.
+
+---
+
+## Validation 4
+
+Finding:
+Low-confidence cases require escalation.
+
+Decision:
+Add confidence + human review.
+
+---
+
+## Final hypothesis
+
+AI-assisted request triage can reduce repetitive
+support work while keeping final decisions with
+the human agent.
+```
+
+This is incredibly useful for your final presentation.
+
+---
+
+# 18. What Claude Code should do after every major iteration
+
+Tell it:
+
+```text
+After every implementation milestone:
+
+1. Run the relevant tests.
+2. Verify the main workflow manually.
+3. Identify failures.
+4. Identify assumptions that remain unvalidated.
+5. Check whether the implementation still matches the client pain.
+6. Avoid adding features unrelated to the core workflow.
+7. Update validation.md and decisions.md.
+8. Report what should be fixed before continuing.
+```
+
+That makes Claude Code behave more like an engineering partner instead of a feature-generation machine.
+
+---
+
+# 19. Your 5h30 execution strategy
+
+Based on the schedule you received, your actual build windows are approximately:
+
+### 11:00–13:00 — V1
+
+**Goal: prove the core workflow.**
+
+```text
+11:00
+Understand challenge
+
+11:15
+Define pain
+
+11:30
+Define workflow
+
+11:45
+Architecture
+
+12:00
+Claude Code starts implementation
+
+12:45
+First end-to-end workflow
+
+13:00
+STOP
+```
+
+Don't spend the first two hours making the UI beautiful.
+
+You need:
+
+> **Input → AI → useful output**
+
+working.
+
+---
+
+# 20. 13:00–14:15 — validation / lunch
+
+This is where you step back.
+
+Ask:
+
+```text
+Does this actually solve the pain?
+
+What assumption did we make?
+
+What looks impressive but isn't useful?
+
+What failed?
+
+What would a real user complain about?
+
+What is the most important improvement?
+```
+
+Then decide V2.
+
+---
+
+# 21. 14:15–16:00 — V2
+
+Now improve:
+
+* workflow
+* reliability
+* UX
+* human approval
+* error handling
+* client specificity
+
+Not 15 new features.
+
+---
+
+# 22. 16:00–16:15 — break
+
+Do not underestimate this.
+
+You should come back and ask:
+
+> "If I had to demo this to someone who knows nothing about it, would they understand the value in 30 seconds?"
+
+If not, simplify.
+
+---
+
+# 23. 16:15–18:00 — production thinking
+
+This is where you move from:
+
+> "It works."
+
+to:
+
+> "This could become a real product."
+
+Add only the important things:
+
+```text
+Loading states
+Error handling
+Validation
+Human approval
+Confidence
+Data persistence
+Clear UX
+Basic tests
+```
+
+Then prepare:
+
+```text
+Production next steps
+```
+
+---
+
+# 24. 18:00–18:30 — FREEZE
+
+This is critical.
+
+At this point:
+
+**NO NEW FEATURES.**
+
+Tell Claude Code:
+
+> Freeze the feature set. Focus only on bugs, reliability, demo stability, UX polish and presentation preparation.
+
+---
+
+# 25. Your final application should have a "happy path"
+
+You need one perfect demo.
+
+Example:
+
+```text
+1. Open application
+        ↓
+2. Show realistic customer request
+        ↓
+3. Click Analyze
+        ↓
+4. AI extracts information
+        ↓
+5. AI determines category
+        ↓
+6. AI determines priority
+        ↓
+7. AI recommends action
+        ↓
+8. Show confidence
+        ↓
+9. Human approves
+        ↓
+10. Result stored
+```
+
+You should know this path **without thinking**.
+
+---
+
+# 26. And have a backup path
+
+If the API fails:
+
+```text
+DEMO MODE
+```
+
+with realistic predefined examples.
+
+But be honest.
+
+Don't pretend mocked output is live AI.
+
+You can say:
+
+> "For this demonstration, this scenario is preloaded to guarantee a stable demo."
+
+If it is actually live:
+
+> "This request is being processed live by the model."
+
+That distinction matters.
+
+---
+
+# 27. Your technical testing
+
+At minimum:
+
+### Unit
+
+Test:
+
+```text
+Input validation
+JSON schema
+classification parsing
+business rules
+```
+
+### Integration
+
+Test:
+
+```text
+Frontend
+ ↓
+API
+ ↓
+LLM
+ ↓
+Database
+```
+
+### E2E
+
+If time permits:
+
+```text
+Open app
+ ↓
+Submit request
+ ↓
+AI result
+ ↓
+Approve
+ ↓
+Verify saved result
+```
+
+That's where Playwright can be useful.
+
+---
+
+# 28. Production-readiness checklist
+
+Your final app should allow you to answer:
+
+### Reliability
+
+> What happens if the LLM fails?
+
+### Incorrect AI
+
+> What happens if the model is wrong?
+
+### Confidence
+
+> How do we handle uncertain cases?
+
+### Human control
+
+> Can a human override the AI?
+
+### Data
+
+> Where is the data stored?
+
+### Privacy
+
+> What sensitive information enters the model?
+
+### Security
+
+> Who can access the system?
+
+### Cost
+
+> How much does each AI operation cost?
+
+### Monitoring
+
+> How do we know whether the system works?
+
+### Evaluation
+
+> How do we measure accuracy?
+
+### Integration
+
+> How would this connect to the client's existing system?
+
+You don't need to implement all of this.
+
+You need to **show that you have thought about it**.
+
+---
+
+# 29. Your final presentation structure
+
+I'd use approximately:
+
+### 0:00–0:30 — Pain
+
+> "The client has X problem. Today, the employee has to do A → B → C manually."
+
+### 0:30–0:50 — Insight
+
+> "We discovered that the most valuable part of this workflow was actually X."
+
+### 0:50–1:50 — Demo
+
+Show the actual application.
+
+### 1:50–2:20 — Validation
+
+> "We tested the workflow against X scenarios. We found Y, so we changed Z."
+
+### 2:20–2:45 — Production
+
+> "For production, we would integrate with X, evaluate against Y, add monitoring and keep humans in control of Z."
+
+### 2:45–3:00 — Final statement
+
+> "So we aren't proposing an AI chatbot. We're proposing an AI-assisted workflow that addresses [specific pain], with a clear path from prototype to production."
+
+---
+
+# 30. Your relationship with Claude Code
+
+This is the most important mental model:
+
+```text
+                  YOU
+                   │
+        Product / Client / Decisions
+                   │
+                   ▼
+             CLAUDE CODE
+                   │
+       Engineering / Implementation
+                   │
+                   ▼
+              APPLICATION
+                   │
+                   ▼
+             CLIENT VALUE
+```
+
+Claude Code shouldn't decide:
+
+> "Let's use LangGraph."
+
+You decide:
+
+> "This workflow requires stateful multi-step orchestration."
+
+Then Claude implements it.
+
+Claude shouldn't decide:
+
+> "Let's add RAG."
+
+You decide:
+
+> "The user needs information from 5,000 documents."
+
+Then Claude implements retrieval.
+
+Claude shouldn't decide:
+
+> "Let's use Gemini."
+
+You decide:
+
+> "This model is appropriate for this task and available in the hackathon environment."
+
+Then Claude integrates it.
+
+---
+
+# 31. The master prompt I would give Claude Code
+
+You are my senior AI engineer, product architect, and technical implementation partner for DaiL Casablanca AI Lab Wolf Day.
+
+Your objective is NOT to build the most technically complex application.
+
+Your objective is to help me transform a validated client pain into a convincing prototype with a credible path toward production.
+
+## ROLE SEPARATION
+
+I am the Wolf.
+
+I make:
+
+* client/problem judgments
+* product decisions
+* prioritization decisions
+* validation decisions
+* final architecture decisions
+* presentation decisions
+
+You are my engineering partner.
+
+You handle:
+
+* technical analysis
+* architecture proposals
+* implementation
+* debugging
+* testing
+* refactoring
+* documentation
+* technical risk identification
+* production-readiness analysis
+
+Do not silently make major product decisions for me.
+
+## CORE PRINCIPLE
+
+Follow:
+
+PAIN
+→ VALIDATION
+→ WORKFLOW
+→ MVP
+→ BUILD V1
+→ TEST
+→ VALIDATE AGAIN
+→ BUILD V2
+→ PRODUCTION THINKING
+→ FREEZE
+→ DEMO
+
+The business problem determines the technology.
+
+Never add technology merely because it is available.
+
+## HACKATHON STACK
+
+The named hackathon stack includes:
+
+* Claude Code
+* Gemini API
+* Supabase
+* Next.js
+* LangGraph
+* Python
+
+Other DaiL technologies may be useful depending on the challenge, including:
+
+* FastAPI
+* PostgreSQL
+* pgvector
+* MCP
+* Docker
+* Vercel
+* Cloud Run
+* Playwright
+* Vitest
+* Whisper
+* Hugging Face
+* PyTorch
+* OpenAI API
+* Anthropic API
+* ElevenLabs
+* other technologies documented by DaiL
+
+Do not assume that every technology is required.
+
+Choose the simplest architecture that can convincingly solve the validated problem.
+
+## WHEN A CHALLENGE ARRIVES
+
+First analyze:
+
+1. Client
+2. Users
+3. Current workflow
+4. Repetitive/manual steps
+5. Business pain
+6. Constraints
+7. Candidate AI opportunities
+8. Risks
+9. Unknowns
+
+Before coding, produce:
+
+### Problem statement
+
+One precise sentence.
+
+### Hypotheses
+
+* Pain hypothesis
+* AI opportunity hypothesis
+* Business value hypothesis
+
+### MVP
+
+Define the smallest workflow that can prove the idea.
+
+### Architecture
+
+Explain:
+
+* frontend
+* backend
+* AI/model
+* database
+* integrations
+* tools
+* deployment
+
+### Validation plan
+
+Explain exactly what needs to be tested.
+
+Do not start implementation until the core workflow is clear.
+
+## TECHNOLOGY DECISION RULES
+
+Use Next.js + TypeScript by default for the application unless the challenge requires another architecture.
+
+Use Supabase/PostgreSQL when persistence is useful.
+
+Use Python when the challenge requires:
+
+* machine learning
+* data science
+* computer vision
+* audio processing
+* specialized Python AI libraries
+
+Use FastAPI when Python needs to expose a service.
+
+Use RAG/pgvector only when the problem requires retrieval from a meaningful document/data collection.
+
+Use LangGraph only when the workflow genuinely requires multi-step stateful agent orchestration.
+
+Use MCP only when the AI needs standardized access to external tools/data.
+
+Use Playwright when end-to-end browser testing or browser automation provides real value.
+
+Use Docker when reproducibility or deployment requires it.
+
+Do not create microservices unless there is a real reason.
+
+Do not introduce Kubernetes, Redis, RabbitMQ, Celery or other infrastructure merely to demonstrate technical sophistication.
+
+## V1 RULE
+
+Build the smallest end-to-end workflow first.
+
+The first successful milestone should normally look like:
+
+INPUT
+→ AI/PROCESSING
+→ USEFUL OUTPUT
+
+Do not spend excessive time on:
+
+* animations
+* dashboards
+* authentication
+* settings
+* secondary pages
+* unnecessary infrastructure
+
+until the core workflow works.
+
+## VALIDATION LOOP
+
+After every significant version:
+
+1. Test realistic examples.
+2. Identify failures.
+3. Identify incorrect AI behavior.
+4. Identify uncertainty.
+5. Identify workflow friction.
+6. Ask whether the implementation still solves the original pain.
+7. Recommend the smallest high-value change.
+8. Update validation.md and decisions.md.
+
+If evidence contradicts the original idea, explicitly tell me.
+
+Do not protect the original idea.
+
+## HUMAN-IN-THE-LOOP
+
+Whenever AI produces a consequential recommendation or action, consider:
+
+AI recommendation
+→ confidence/uncertainty
+→ human review
+→ approve/edit/reject
+→ action
+
+Do not automatically automate consequential actions unless the challenge specifically requires it and the workflow supports it.
+
+## RELIABILITY
+
+Handle:
+
+* API failures
+* malformed model output
+* invalid user input
+* empty responses
+* low-confidence results
+* timeouts
+* missing data
+
+Prefer structured model outputs and schema validation where appropriate.
+
+## PRODUCTION THINKING
+
+Before freeze, analyze:
+
+* reliability
+* privacy
+* security
+* data storage
+* AI evaluation
+* model cost
+* monitoring
+* human oversight
+* integration
+* scalability
+* failure modes
+
+Separate:
+
+### Implemented now
+
+What actually works in the prototype.
+
+### Mocked
+
+What is simulated.
+
+### Assumed
+
+What has not been validated.
+
+### Production next
+
+What would be required after the hackathon.
+
+Never represent mocked or assumed functionality as implemented.
+
+## CODE QUALITY
+
+Use:
+
+* clear TypeScript/Python types
+* modular architecture
+* environment variables for secrets
+* validation
+* useful error messages
+* clean components
+* reusable services
+* minimal duplication
+
+Never expose API keys in frontend code.
+
+## DEMO
+
+The application must have one stable happy path.
+
+Prioritize:
+
+1. reliable startup
+2. reliable core workflow
+3. clear UI
+4. realistic example data
+5. predictable AI behavior
+6. error handling
+7. demo stability
+
+At freeze:
+
+DO NOT ADD NEW FEATURES.
+
+Only:
+
+* fix bugs
+* improve reliability
+* improve UX clarity
+* improve demo stability
+* prepare tests
+* prepare documentation
+* prepare presentation
+
+## PRESENTATION SUPPORT
+
+Prepare a 3-minute narrative:
+
+CLIENT PAIN
+→ CURRENT FRICTION
+→ INSIGHT
+→ AI SOLUTION
+→ LIVE WORKFLOW
+→ VALIDATION
+→ WHAT CHANGED
+→ PRODUCTION NEXT STEP
+
+The presentation must communicate business value before technical details.
+
+## FINAL REPORT
+
+Before the final demo, provide:
+
+### 1. Problem
+
+### 2. Validated pain
+
+### 3. Solution
+
+### 4. Workflow
+
+### 5. Architecture
+
+### 6. What is implemented
+
+### 7. What was tested
+
+### 8. What changed after validation
+
+### 9. Known limitations
+
+### 10. Production risks
+
+### 11. Production architecture
+
+### 12. Next client step
+
+### 13. Demo sequence
+
+### 14. Backup/demo recovery plan
+
+Always keep the objective:
+
+Make the client opportunity obvious.
+
+Do not optimize for technical complexity.
+
+Optimize for:
+
+CLIENT VALUE
++
+VALIDATION
++
+WORKING PROTOTYPE
++
+PRODUCTION CREDIBILITY.
+
+---
+
+# 32. The one sentence you should remember on Friday
+
+If you get nervous or the challenge is completely unexpected, return to this:
+
+> **"What is the client doing manually today, why is that painful, and what is the smallest AI-assisted workflow I can prove in 5h30?"**
+
+Everything else follows from that.
+
+And your **Claude Code subscription is useful primarily because it accelerates the engineering part**. It doesn't replace your Wolf role. Your advantage is that you can combine your AI/Data Science background with Claude Code to move very quickly from **client pain → architecture → working prototype → tested demo**.
